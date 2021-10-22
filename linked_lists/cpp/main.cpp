@@ -1,8 +1,4 @@
-#include "Node.h"
-#include "reverse_list_1.cpp"
-#include <iostream>
-
-using namespace std;
+#include "includes.h"
 
 int main(int argc, char *argv[]) {
 
