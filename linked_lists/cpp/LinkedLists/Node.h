@@ -1,10 +1,11 @@
 #pragma once
 
-#include "includes.h"
+#include <iostream>
 
 class Node {
 public:
   Node(int value);
+  ~Node();
 
   void print();
   void printList(const char *sep = ", ");
