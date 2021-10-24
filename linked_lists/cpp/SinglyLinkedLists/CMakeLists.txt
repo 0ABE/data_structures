@@ -3,9 +3,9 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
-project ("LinkedLists")
+project ("SinglyLinkedLists")
 
 # Add source to this project's executable.
-add_executable (LinkedLists "LinkedLists.cpp" "Node.cpp" "Node.h" "Reverser.cpp" "Reverser.h" "ListBuilder.cpp" "ListBuilder.h")
+add_executable (SinglyLinkedLists "main.cpp" "Node.cpp" "Node.h" "Reverser.cpp" "Reverser.h" "ListBuilder.cpp" "ListBuilder.h")
 
 # TODO: Add tests and install targets if needed.
