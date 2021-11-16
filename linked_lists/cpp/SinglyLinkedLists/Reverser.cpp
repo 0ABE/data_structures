@@ -23,17 +23,17 @@ static void swap(Node *&a, Node *&b) {
 // Because of the recursive nature of this function, there is no way to
 // update the head's _next ptr to null (null<-a). This leaves us in a final
 // state of a<->b that we correct after we fully return from this function.
-void Reverser::reverse(Node *curr, Node *next) {
+void Reverser::reverse_1(Node *curr, Node *next) {
   if (next->next()) {
     // follow the linked list to the end
-    reverse(next, next->next());
+    reverse_1(next, next->next());
   }
   // reverse ptr assignments are made as the recursion unwinds
   next->setNext(curr);
 }
 
 // Perform the in-place reversal
-void Reverser::exec(Node *&head) {
+void Reverser::exec_1(Node *&head) {
   // 1. Reversal of each link happens with 2 pointers (current, and next).
   // 2. Must manually set the old head's _next ptr to null.
   // 3. Requires a tail node to swap with the head as last step.
@@ -41,7 +41,7 @@ void Reverser::exec(Node *&head) {
 
   if (head->next()) {
     // head->next : head<->next
-    reverse(head, head->next());
+    reverse_1(head, head->next());
     // null<-head<-next
     head->setNext(nullptr);
     // swap the head and tail
