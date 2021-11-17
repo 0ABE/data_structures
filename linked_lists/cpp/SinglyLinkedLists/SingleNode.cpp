@@ -1,6 +1,6 @@
 #include "SingleNode.h"
 
-SingleNode::SingleNode(int value) : _value(value), _next(nullptr) {}
+SingleNode::SingleNode(int value) : AbstractNode(value) { _next = nullptr; }
 
 SingleNode::~SingleNode() {
   // free memory for all nodes following this one
@@ -9,10 +9,10 @@ SingleNode::~SingleNode() {
   }
 }
 
-bool SingleNode::operator==(const SingleNode &rhs) const {
+bool SingleNode::operator==(SingleNode &rhs) {
   if (value() == rhs.value()) {
-    if (next() && rhs.next()) {
-      return (*next() == *rhs.next());
+    if (step() && rhs.step()) {
+      return (*step() == *rhs.step());
     } else {
       return true;
     }
@@ -21,25 +21,7 @@ bool SingleNode::operator==(const SingleNode &rhs) const {
   }
 }
 
-SingleNode *SingleNode::next() const { return _next; }
-
-void SingleNode::setNext(SingleNode *node) { _next = node; }
-
-int SingleNode::value() const { return _value; }
-
-void SingleNode::print() { std::cout << _value; }
-
-void SingleNode::printList(const char *sep) {
-  print();
-  if (_next) {
-    std::cout << sep;
-    _next->printList(sep);
-  } else {
-    std::cout << '\n';
-  }
-}
-
-SingleNode *SingleNode::append(int value) {
+SingleNode *SingleNode::append(int value, enum DIRECTION) {
   if (_next) {
     // first find the tail, then append
     return _next->append(value);
@@ -48,13 +30,7 @@ SingleNode *SingleNode::append(int value) {
   }
 }
 
-SingleNode *SingleNode::append_strict(int value) {
-  // append the new value to this node
-  _next = new SingleNode(value);
-  return _next;
-}
-
-SingleNode *SingleNode::append_n(int value, size_t n) {
+SingleNode *SingleNode::append_n(int value, size_t n, enum DIRECTION) {
   if (n < 1) {
     return nullptr;
   } else if (n == 1) {
@@ -65,7 +41,31 @@ SingleNode *SingleNode::append_n(int value, size_t n) {
   }
 }
 
-SingleNode *SingleNode::insert_after(int value, int after_value) {
+SingleNode *SingleNode::append_strict(int value, enum DIRECTION) {
+  // append the new value to this node
+  _next = new SingleNode(value);
+  return _next;
+}
+
+bool SingleNode::exists(int value) {
+  SingleNode *node = get(value);
+  return (node != nullptr);
+}
+
+SingleNode *SingleNode::get(int value, enum DIRECTION) {
+  if (_value == value) {
+    return this;
+  } else {
+    if (_next) {
+      return _next->get(value);
+    } else {
+      return nullptr;
+    }
+  }
+}
+
+SingleNode *SingleNode::insert_after(int value, int after_value,
+                                     enum DIRECTION) {
   if (_value == after_value) {
     SingleNode *old_next = nullptr;
     if (_next) {
@@ -94,7 +94,8 @@ SingleNode *SingleNode::insert_after(int value, int after_value) {
   }
 }
 
-SingleNode *SingleNode::insert_before(int value, int before_value, SingleNode *prev) {
+SingleNode *SingleNode::insert_before(int value, int before_value,
+                                      SingleNode *prev, enum DIRECTION) {
   if (_value == before_value) {
     // make the node to insert
     SingleNode *node = new SingleNode(value);
@@ -121,7 +122,17 @@ SingleNode *SingleNode::insert_before(int value, int before_value, SingleNode *p
   }
 }
 
-SingleNode *SingleNode::remove(int value, SingleNode *prev) {
+void SingleNode::printList(const char *sep, enum DIRECTION) const {
+  print();
+  if (_next) {
+    std::cout << sep;
+    _next->printList(sep);
+  } else {
+    std::cout << '\n';
+  }
+}
+
+SingleNode *SingleNode::remove(int value, SingleNode *prev, enum DIRECTION) {
   if (prev && value == _value) {
     if (prev) {
       // set the previous node to the next node
@@ -142,22 +153,9 @@ SingleNode *SingleNode::remove(int value, SingleNode *prev) {
   }
 }
 
-bool SingleNode::exists(int value) {
-  SingleNode *node = get(value);
-  return (node != nullptr);
-}
+SingleNode *SingleNode::step(enum DIRECTION) { return _next; }
 
-SingleNode *SingleNode::get(int value) {
-  if (_value == value) {
-    return this;
-  } else {
-    if (_next) {
-      return _next->get(value);
-    } else {
-      return nullptr;
-    }
-  }
-}
+void SingleNode::setNext(SingleNode *node) { _next = node; }
 
 SingleNode *SingleNode::tail() {
   if (_next) {
@@ -166,7 +164,7 @@ SingleNode *SingleNode::tail() {
   return this;
 }
 
-void SingleNode::trim(bool trim) {
+void SingleNode::trim(bool trim, enum DIRECTION) {
   if (_next) {
     // seek to the end of the list, with trim set to true
     _next->trim(true);
