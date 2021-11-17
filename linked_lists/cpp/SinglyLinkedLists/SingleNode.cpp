@@ -1,15 +1,15 @@
-#include "Node.h"
+#include "SingleNode.h"
 
-Node::Node(int value) : _value(value), _next(nullptr) {}
+SingleNode::SingleNode(int value) : _value(value), _next(nullptr) {}
 
-Node::~Node() {
-  // free memory for all nodes following this node
+SingleNode::~SingleNode() {
+  // free memory for all nodes following this one
   if (_next) {
     delete _next;
   }
 }
 
-bool Node::operator==(const Node &rhs) const {
+bool SingleNode::operator==(const SingleNode &rhs) const {
   if (value() == rhs.value()) {
     if (next() && rhs.next()) {
       return (*next() == *rhs.next());
@@ -21,15 +21,15 @@ bool Node::operator==(const Node &rhs) const {
   }
 }
 
-Node *Node::next() const { return _next; }
+SingleNode *SingleNode::next() const { return _next; }
 
-void Node::setNext(Node *node) { _next = node; }
+void SingleNode::setNext(SingleNode *node) { _next = node; }
 
-int Node::value() const { return _value; }
+int SingleNode::value() const { return _value; }
 
-void Node::print() { std::cout << _value; }
+void SingleNode::print() { std::cout << _value; }
 
-void Node::printList(const char *sep) {
+void SingleNode::printList(const char *sep) {
   print();
   if (_next) {
     std::cout << sep;
@@ -39,7 +39,7 @@ void Node::printList(const char *sep) {
   }
 }
 
-Node *Node::append(int value) {
+SingleNode *SingleNode::append(int value) {
   if (_next) {
     // first find the tail, then append
     return _next->append(value);
@@ -48,31 +48,31 @@ Node *Node::append(int value) {
   }
 }
 
-Node *Node::append_strict(int value) {
+SingleNode *SingleNode::append_strict(int value) {
   // append the new value to this node
-  _next = new Node(value);
+  _next = new SingleNode(value);
   return _next;
 }
 
-Node *Node::append_n(int value, size_t n) {
+SingleNode *SingleNode::append_n(int value, size_t n) {
   if (n < 1) {
     return nullptr;
   } else if (n == 1) {
     return append_strict(value);
   } else {
-    Node *next = append_strict(value);
+    SingleNode *next = append_strict(value);
     return next->append_n(++value, --n);
   }
 }
 
-Node *Node::insert_after(int value, int after_value) {
+SingleNode *SingleNode::insert_after(int value, int after_value) {
   if (_value == after_value) {
-    Node *old_next = nullptr;
+    SingleNode *old_next = nullptr;
     if (_next) {
       // keep a handle on the rest of the list
       old_next = _next;
       // this potentially breaks the list when we insert the new value
-      Node *appended = append_strict(value);
+      SingleNode *appended = append_strict(value);
       // if there was more to the list, reconnect it
       if (old_next) {
         appended->setNext(old_next);
@@ -94,10 +94,10 @@ Node *Node::insert_after(int value, int after_value) {
   }
 }
 
-Node *Node::insert_before(int value, int before_value, Node *prev) {
+SingleNode *SingleNode::insert_before(int value, int before_value, SingleNode *prev) {
   if (_value == before_value) {
     // make the node to insert
-    Node *node = new Node(value);
+    SingleNode *node = new SingleNode(value);
     // before: prev->this
     // after:  prev->node->this
     // make new links to node
@@ -121,7 +121,7 @@ Node *Node::insert_before(int value, int before_value, Node *prev) {
   }
 }
 
-Node *Node::remove(int value, Node *prev) {
+SingleNode *SingleNode::remove(int value, SingleNode *prev) {
   if (prev && value == _value) {
     if (prev) {
       // set the previous node to the next node
@@ -142,12 +142,12 @@ Node *Node::remove(int value, Node *prev) {
   }
 }
 
-bool Node::exists(int value) {
-  Node *node = get(value);
+bool SingleNode::exists(int value) {
+  SingleNode *node = get(value);
   return (node != nullptr);
 }
 
-Node *Node::get(int value) {
+SingleNode *SingleNode::get(int value) {
   if (_value == value) {
     return this;
   } else {
@@ -159,14 +159,14 @@ Node *Node::get(int value) {
   }
 }
 
-Node *Node::tail() {
+SingleNode *SingleNode::tail() {
   if (_next) {
     return _next->tail();
   }
   return this;
 }
 
-void Node::trim(bool trim) {
+void SingleNode::trim(bool trim) {
   if (_next) {
     // seek to the end of the list, with trim set to true
     _next->trim(true);

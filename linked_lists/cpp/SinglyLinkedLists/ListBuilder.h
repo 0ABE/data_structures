@@ -1,10 +1,10 @@
 #pragma once
 
 #include <vector>
-#include "Node.h"
+#include "SingleNode.h"
 
 class ListBuilder {
 public:
-	Node* build(int init_value, size_t list_size);
-	Node* build(const std::vector<int> &values);
+	SingleNode* build(int init_value, size_t list_size);
+	SingleNode* build(const std::vector<int> &values);
 };

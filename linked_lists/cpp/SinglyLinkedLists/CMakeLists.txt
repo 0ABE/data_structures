@@ -15,7 +15,7 @@ project ("SinglyLinkedLists")
 
 # Add source to this project's executable.
 add_executable (SinglyLinkedLists "main.cpp" 
-                "Node.cpp" "Node.h" 
+                "SingleNode.cpp" "SingleNode.h" 
                 "Reverser.cpp" "Reverser.h"
                 "Testframe.cpp" "Testframe.h"
                 "ListBuilder.cpp" "ListBuilder.h")

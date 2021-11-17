@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-class Node {
+class SingleNode {
 public:
-  Node(int value = 0);
-  ~Node();
+  SingleNode(int value = 0);
+  ~SingleNode();
 
-  bool operator==(const Node &rhs) const;
+  bool operator==(const SingleNode &rhs) const;
 
   // print the node value
   void print();
@@ -15,26 +15,26 @@ public:
   void printList(const char *sep = ", ");
 
   // appends value to the tail of this node
-  Node *append(int value);
+  SingleNode *append(int value);
   // append n nodes to this node, starting with value
-  Node *append_n(int value, size_t n);
+  SingleNode *append_n(int value, size_t n);
   // insert value after the node with after_value
-  Node *insert_after(int value, int after_value);
+  SingleNode *insert_after(int value, int after_value);
   // insert value before the node with before_value
-  Node *insert_before(int value, int before_value, Node *prev = nullptr);
+  SingleNode *insert_before(int value, int before_value, SingleNode *prev = nullptr);
   // Remove the node represented by value. A node cannot remove itself without a valid prev pointer.
-  Node *remove(int value, Node *prev = nullptr);
+  SingleNode *remove(int value, SingleNode *prev = nullptr);
   // return whether or not value is in the list
   bool exists(int value);
   // get the node with value
-  Node *get(int value);
+  SingleNode *get(int value);
   // return the next node in the list
-  Node *next() const;
+  SingleNode *next() const;
   // set the next node in the list
-  void setNext(Node *node);
+  void setNext(SingleNode *node);
 
   // get the last node
-  Node *tail();
+  SingleNode *tail();
   // get the node value
   int value() const;
   // Delete all nodes after this node.
@@ -44,9 +44,9 @@ public:
 
 protected:
   // a dumb appender. Only call when guaranteed appending to the tail.
-  Node *append_strict(int value);
+  SingleNode *append_strict(int value);
 
-  Node *_next;
+  SingleNode *_next;
   int _value;
 
-}; // class Node
+}; // class SingleNode

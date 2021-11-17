@@ -1,6 +1,6 @@
 #include "Testframe.h"
 
-bool Testframe::test_equals(Node *lhs, Node *rhs) {
+bool Testframe::test_equals(SingleNode *lhs, SingleNode *rhs) {
   if (!lhs && !rhs) {
     // true if both nodes are null
     return true;
@@ -14,12 +14,12 @@ bool Testframe::test_equals(Node *lhs, Node *rhs) {
   return true;
 }
 
-bool Testframe::test_exists(Node *node, int value) {
+bool Testframe::test_exists(SingleNode *node, int value) {
   assert(node->exists(value));
   return true;
 }
 
-bool Testframe::test_missing(Node *node, int value) {
+bool Testframe::test_missing(SingleNode *node, int value) {
   assert(!node->exists(value));
   return true;
 }
@@ -28,7 +28,7 @@ void Testframe::exec() {
   Reverser reverser;
   ListBuilder listBuilder;
 
-  Node *list = listBuilder.build(1, 5);
+  SingleNode *list = listBuilder.build(1, 5);
 
   // print the list as created
   list->printList();
@@ -46,7 +46,7 @@ void Testframe::exec() {
   test_equals(list, listBuilder.build({1, 10, 2, 20, 3, 4, 5}));
 
   // append 30 to 3
-  Node *node_3 = list->get(3);
+  SingleNode *node_3 = list->get(3);
   node_3->append(30);
   test_equals(list, listBuilder.build({1, 10, 2, 20, 3, 4, 5, 30}));
   test_equals(node_3, listBuilder.build({3, 4, 5, 30}));
@@ -59,7 +59,7 @@ void Testframe::exec() {
   test_exists(list, 30);
 
   // remove 30
-  if (Node *node_30 = list->remove(30)) {
+  if (SingleNode *node_30 = list->remove(30)) {
     // node_30 has no next nodes
     test_equals(node_30, listBuilder.build({30}));
     // free the memory
@@ -72,7 +72,7 @@ void Testframe::exec() {
   test_missing(list, 30);
 
   // trim the list after the 4
-  Node *node_4 = list->get(4);
+  SingleNode *node_4 = list->get(4);
   node_4->trim();
   test_equals(list, listBuilder.build({1, 10, 2, 20, 3, 4}));
   test_equals(node_3, listBuilder.build({3, 4}));
@@ -81,7 +81,7 @@ void Testframe::exec() {
   // remove an existing value from the end
   // node node_4 can remove itself only with a previous node (node_3 in this
   // case)
-  if (Node *node_4b = node_4->remove(4, node_3)) {
+  if (SingleNode *node_4b = node_4->remove(4, node_3)) {
     // node_4b has no next nodes
     test_equals(node_4b, listBuilder.build({4}));
     // ree the memory
@@ -95,7 +95,7 @@ void Testframe::exec() {
   test_equals(list, listBuilder.build({3, 20, 2, 10, 1}));
 
   // remove an existing value from the middle
-  if (Node *node_2 = list->remove(2)) {
+  if (SingleNode *node_2 = list->remove(2)) {
     // node_2 has no next nodes
     test_equals(node_2, listBuilder.build({2}));
     // free the memory
@@ -104,7 +104,7 @@ void Testframe::exec() {
   test_equals(list, listBuilder.build({3, 20, 10, 1}));
 
   // removing a non-existant value does nothing
-  Node *node_2 = list->remove(2);
+  SingleNode *node_2 = list->remove(2);
   // node_2 should be null since 2 couldn't be found
   test_equals(nullptr, node_2);
   test_equals(list, listBuilder.build({3, 20, 10, 1}));
@@ -126,7 +126,7 @@ void Testframe::exec() {
 
   // remove the 2 nodes with value 0, but try removing more than 2 times
   for (int i = 0; i < 5; i++) {
-    if (Node *node_0 = list->remove(0)) {
+    if (SingleNode *node_0 = list->remove(0)) {
       delete node_0;
     }
   }
