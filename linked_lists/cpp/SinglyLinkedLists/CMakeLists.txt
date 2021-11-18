@@ -14,10 +14,19 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 project ("SinglyLinkedLists")
 
 # Add source to this project's executable.
-add_executable (SinglyLinkedLists "main.cpp" 
-                "SingleNode.cpp" "SingleNode.h" 
-                "Reverser.cpp" "Reverser.h"
-                "Testframe.cpp" "Testframe.h"
-                "ListBuilder.cpp" "ListBuilder.h")
+add_executable (
+  SinglyLinkedLists
+  "../AbstractNode.cpp"
+  "../AbstractNode.h"
+  "main.cpp"
+  "ListBuilder.cpp"
+  "ListBuilder.h"
+  "Reverser.cpp"
+  "Reverser.h"
+  "SingleNode.cpp"
+  "SingleNode.h"
+  "Testframe.cpp"
+  "Testframe.h"
+)
 
 # TODO: Add tests and install targets if needed.

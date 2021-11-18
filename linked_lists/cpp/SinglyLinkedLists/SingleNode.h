@@ -2,51 +2,67 @@
 
 #include <iostream>
 
-class SingleNode {
+#include "../AbstractNode.h"
+
+// which direction to print the linked lists
+// NEXT for SinglyLinkedLists
+// PREV for DoublyLinkedLists
+enum DIRECTION { NEXT, PREV };
+
+class SingleNode : AbstractNode {
 public:
   SingleNode(int value = 0);
   ~SingleNode();
 
-  bool operator==(const SingleNode &rhs) const;
-
-  // print the node value
-  void print();
-  // print the list starting at this node
-  void printList(const char *sep = ", ");
+  bool operator==(SingleNode &rhs);
 
   // appends value to the tail of this node
-  SingleNode *append(int value);
+  virtual SingleNode *append(int value, enum DIRECTION dx = NEXT);
+
   // append n nodes to this node, starting with value
-  SingleNode *append_n(int value, size_t n);
-  // insert value after the node with after_value
-  SingleNode *insert_after(int value, int after_value);
-  // insert value before the node with before_value
-  SingleNode *insert_before(int value, int before_value, SingleNode *prev = nullptr);
-  // Remove the node represented by value. A node cannot remove itself without a valid prev pointer.
-  SingleNode *remove(int value, SingleNode *prev = nullptr);
+  virtual SingleNode *append_n(int value, size_t n, enum DIRECTION dx = NEXT);
+
   // return whether or not value is in the list
-  bool exists(int value);
+  bool exists(int value, enum DIRECTION dx = NEXT);
+
   // get the node with value
-  SingleNode *get(int value);
-  // return the next node in the list
-  SingleNode *next() const;
+  virtual SingleNode *get(int value, enum DIRECTION dx = NEXT);
+
+  // insert value after the node with after_value
+  virtual SingleNode *insert_after(int value, int after_value,
+                                   enum DIRECTION dx = NEXT);
+
+  // insert value before the node with before_value
+  virtual SingleNode *insert_before(int value, int before_value,
+                                    SingleNode *prev = nullptr,
+                                    enum DIRECTION dx = NEXT);
+
+  // print the list starting at this node
+  virtual void printList(const char *sep = ", ", enum DIRECTION dx = NEXT) const;
+
+  // Remove the node represented by value.
+  // A node cannot remove itself without a valid prev pointer.
+  virtual SingleNode *remove(int value, SingleNode *prev = nullptr,
+                             enum DIRECTION dx = NEXT);
+
   // set the next node in the list
   void setNext(SingleNode *node);
 
+  // return the next node in the list
+  virtual SingleNode *step(enum DIRECTION dx = NEXT);
+
   // get the last node
   SingleNode *tail();
-  // get the node value
-  int value() const;
+
   // Delete all nodes after this node.
   // The "trim" flag indicates whether or not to delete this node.
   // By default "trim" is false (preserving the calling node).
-  void trim(bool trim = false);
+  virtual void trim(bool trim = false, enum DIRECTION dx = NEXT);
 
 protected:
-  // a dumb appender. Only call when guaranteed appending to the tail.
-  SingleNode *append_strict(int value);
+  // a dumb appender. Only call when guaranteed appending to an end.
+  virtual SingleNode *append_strict(int value, enum DIRECTION dx = NEXT);
 
   SingleNode *_next;
-  int _value;
 
 }; // class SingleNode

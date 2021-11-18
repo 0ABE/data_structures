@@ -24,9 +24,9 @@ static void swap(SingleNode *&a, SingleNode *&b) {
 // update the head's _next ptr to null (null<-a). This leaves us in a final
 // state of a<->b that we correct after we fully return from this function.
 void Reverser::reverse_1(SingleNode *curr, SingleNode *next) {
-  if (next->next()) {
+  if (next->step()) {
     // follow the linked list to the end
-    reverse_1(next, next->next());
+    reverse_1(next, next->step());
   }
   // reverse ptr assignments are made as the recursion unwinds
   next->setNext(curr);
@@ -39,9 +39,9 @@ void Reverser::exec_1(SingleNode *&head) {
   // 3. Requires a tail node to swap with the head as last step.
   SingleNode *tail = head->tail();
 
-  if (head->next()) {
+  if (head->step()) {
     // head->next : head<->next
-    reverse_1(head, head->next());
+    reverse_1(head, head->step());
     // null<-head<-next
     head->setNext(nullptr);
     // swap the head and tail
