@@ -47,8 +47,8 @@ SingleNode *SingleNode::append_strict(int value, enum DIRECTION) {
   return _next;
 }
 
-bool SingleNode::exists(int value) {
-  SingleNode *node = get(value);
+bool SingleNode::exists(int value, enum DIRECTION dx) {
+  SingleNode *node = get(value, dx);
   return (node != nullptr);
 }
 

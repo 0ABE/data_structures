@@ -23,7 +23,7 @@ public:
   virtual SingleNode *append_n(int value, size_t n, enum DIRECTION dx = NEXT);
 
   // return whether or not value is in the list
-  bool exists(int value);
+  bool exists(int value, enum DIRECTION dx = NEXT);
 
   // get the node with value
   virtual SingleNode *get(int value, enum DIRECTION dx = NEXT);
