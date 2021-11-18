@@ -153,9 +153,9 @@ SingleNode *SingleNode::remove(int value, SingleNode *prev, enum DIRECTION) {
   }
 }
 
-SingleNode *SingleNode::step(enum DIRECTION) { return _next; }
-
 void SingleNode::setNext(SingleNode *node) { _next = node; }
+
+SingleNode *SingleNode::step(enum DIRECTION) { return _next; }
 
 SingleNode *SingleNode::tail() {
   if (_next) {

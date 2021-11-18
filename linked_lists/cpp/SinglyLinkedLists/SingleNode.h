@@ -45,11 +45,11 @@ public:
   virtual SingleNode *remove(int value, SingleNode *prev = nullptr,
                              enum DIRECTION dx = NEXT);
 
-  // return the next node in the list
-  virtual SingleNode *step(enum DIRECTION dx = NEXT);
-
   // set the next node in the list
   void setNext(SingleNode *node);
+
+  // return the next node in the list
+  virtual SingleNode *step(enum DIRECTION dx = NEXT);
 
   // get the last node
   SingleNode *tail();
