@@ -22,12 +22,9 @@ bool SingleNode::operator==(SingleNode &rhs) {
 }
 
 SingleNode *SingleNode::append(int value, enum DIRECTION) {
-  if (_next) {
-    // first find the tail, then append
-    return _next->append(value);
-  } else {
-    return append_strict(value);
-  }
+  // first find the tail, then append
+  SingleNode *tail = this->tail();
+  return tail->append_strict(value);
 }
 
 SingleNode *SingleNode::append_n(int value, size_t n, enum DIRECTION) {
