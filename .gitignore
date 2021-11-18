@@ -1,6 +1,8 @@
 # Directories
 out/
-.DS_Store/
+
+# System files
+.DS_Store
 
 # Prerequisites
 *.d
