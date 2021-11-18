@@ -2,9 +2,6 @@
 
 #include <iostream>
 
-// which direction to print the doubly linked list
-enum DIRECTION { NEXT, PREV };
-
 class AbstractNode {
 public:
   AbstractNode(int value = 0);

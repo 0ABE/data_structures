@@ -4,6 +4,11 @@
 
 #include "../AbstractNode.h"
 
+// which direction to print the linked lists
+// NEXT for SinglyLinkedLists
+// PREV for DoublyLinkedLists
+enum DIRECTION { NEXT, PREV };
+
 class SingleNode : AbstractNode {
 public:
   SingleNode(int value = 0);
