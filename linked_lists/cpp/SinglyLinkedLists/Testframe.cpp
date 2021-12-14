@@ -9,6 +9,7 @@ bool Testframe::test_equals(SingleNode *lhs, SingleNode *rhs) {
     assert(*lhs == *rhs);
   }
   if (rhs) {
+    // rhs is used only temporarily for comparison. free it now.
     delete rhs;
   }
   return true;
